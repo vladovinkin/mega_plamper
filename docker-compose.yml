@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  catboard-db:
+    image: mysql:8.0.32
+    container_name: megaplamper-db
+    hostname: megaplumper-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=4fRdtkwp
+      - MYSQL_USER=megaplamper
+      - MYSQL_PASSWORD=LlcFZi8p
+      - MYSQL_DATABASE=megaplamper
+    volumes:
+      - $PWD/docker/config/mysql.d/:/etc/mysql/conf.d/:ro
+      - megaplamper_db_data:/var/lib/mysql
+    ports:
+      - "127.0.0.1:3326:3306"
+
+volumes:
+  megaplamper_db_data:
