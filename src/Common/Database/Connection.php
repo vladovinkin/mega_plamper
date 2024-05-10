@@ -51,6 +51,21 @@ final class Connection
         return $this->getConnection()->prepare($sql);
     }
 
+    public function beginTransaction(): void
+    {
+        $this->getConnection()->beginTransaction();
+    }
+
+    public function commit(): void
+    {
+        $this->getConnection()->commit();
+    }
+
+    public function rollback(): void
+    {
+        $this->getConnection()->rollBack();
+    }
+
     /**
      * Выполняет ленивое создание объекта PDO, абстрагирующего соединение с базой данных.
      * Устанавливает параметры:

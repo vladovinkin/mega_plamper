@@ -1,0 +1,12 @@
+Мастера:  {{ quantity }}<br>
+{% set num = 1 %}
+<table>
+{% for row in masters %}
+    <tr>
+        <td>{{ num }}.</td>
+        <td>{{ row.last_name }} {{ row.first_name }}</td>
+        <td><a href="/master/delete/{{ row.id }}">Удалить</a></td>
+    </tr>
+    {% set num = num + 1 %}
+{% endfor %}
+</table>

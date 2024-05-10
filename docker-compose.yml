@@ -4,7 +4,7 @@ services:
   catboard-db:
     image: mysql:8.0.32
     container_name: megaplamper-db
-    hostname: megaplumper-db
+    hostname: megaplamper-db
     environment:
       - MYSQL_ROOT_PASSWORD=4fRdtkwp
       - MYSQL_USER=megaplamper

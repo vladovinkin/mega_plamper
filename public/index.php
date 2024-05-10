@@ -23,13 +23,15 @@ $app->add(TwigMiddleware::create($app, $twig));
 // Методы get/delete/post соответствуют HTTP-методам GET/DELETE/POST,
 //  что позволяет по-разному обрабатывать, например, GET и POST
 //  запросы к одному URL
-$app->get('/', \App\Controller\HomeController::class . ':home');
-
-$app->get('/articles/list', \App\Controller\ArticleApiController::class . ':listArticles');
-$app->delete('/articles/batch-delete', \App\Controller\ArticleApiController::class . ':batchDeleteArticles');
-$app->get('/article', \App\Controller\ArticleApiController::class . ':getArticle');
-$app->post('/article', \App\Controller\ArticleApiController::class . ':createArticle');
-$app->post('/article/edit', \App\Controller\ArticleApiController::class . ':editArticle');
-$app->delete('/article/delete', \App\Controller\ArticleApiController::class . ':deleteArticle');
+$app->get('/master/list', \App\Controller\MasterController::class . ':list');
+$app->get('/master/new', \App\Controller\MasterController::class . ':new');
+$app->get('/master/[id]', \App\Controller\MasterController::class . ':edit');
+$app->delete('/master/[id]', \App\Controller\MasterController::class . ':delete');
+$app->get('/master/event/add', \App\Controller\MasterController::class . ':addEvent');
+$app->delete('/master/event/[id]', \App\Controller\MasterController::class . ':removeEvent');
+$app->get('/client/list', \App\Controller\ClientController::class . ':list');
+$app->get('/client/new', \App\Controller\ClientController::class . ':new');
+$app->get('/client/[id]', \App\Controller\ClientController::class . ':edit');
+$app->redirect('/', '/master/list');
 
 $app->run();
