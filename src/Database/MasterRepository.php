@@ -91,10 +91,13 @@ class MasterRepository
             return;
         }
 
+        $dateTime = date(DatabaseDateFormat::MYSQL_DATETIME_FORMAT);
         $placeholders = substr(str_repeat('?,', count($ids)), 0, -1);
         $this->connection->execute(
             <<<SQL
-            DELETE FROM master WHERE id IN ($placeholders)
+            UPDATE master 
+            SET deleted_at = '$dateTime' 
+            WHERE id IN ($placeholders)
             SQL,
             $ids
         );

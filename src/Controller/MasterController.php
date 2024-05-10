@@ -28,8 +28,11 @@ class MasterController
 
         $id = (int)$args['id'];
         ServiceProvider::getInstance()->getMasterService()->deleteMaster($id);
+        $view = Twig::fromRequest($request);
 
-        return $this->list($request, $response);
+        return $view->render($response, 'redirect.twig', [
+            'url' => '/',
+        ]);
     }
 
     private function getRowData(Master $data): array
