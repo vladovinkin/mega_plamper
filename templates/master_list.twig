@@ -5,7 +5,12 @@
     <tr>
         <td>{{ num }}.</td>
         <td>{{ row.last_name }} {{ row.first_name }}</td>
-        <td><a href="/master/delete/{{ row.id }}">Удалить</a></td>
+        <td>
+            <form action="/master/{{ row.id }}" method="post">
+                <input type="hidden" name="_METHOD" value="DELETE">
+                <input type="submit" value="Удалить">
+            </form>
+        </td>
     </tr>
     {% set num = num + 1 %}
 {% endfor %}

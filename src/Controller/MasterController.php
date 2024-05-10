@@ -22,6 +22,16 @@ class MasterController
         ]);
     }
 
+    public function delete(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
+    {
+        $view = Twig::fromRequest($request);
+
+        $id = (int)$args['id'];
+        ServiceProvider::getInstance()->getMasterService()->deleteMaster($id);
+
+        return $this->list($request, $response);
+    }
+
     private function getRowData(Master $data): array
     {
         return [
@@ -31,7 +41,6 @@ class MasterController
             'phone' => $data->getPhone(),
         ];
     }
-
 
     public function new(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {

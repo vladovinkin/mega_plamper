@@ -84,21 +84,21 @@ class MasterRepository
      * @param int[] $ids
      * @return void
      */
-//    public function delete(array $ids): void
-//    {
-//        if (count($ids) === 0)
-//        {
-//            return;
-//        }
-//
-//        $placeholders = substr(str_repeat('?,', count($ids)), 0, -1);
-//        $this->connection->execute(
-//            <<<SQL
-//            DELETE FROM article WHERE id IN ($placeholders)
-//            SQL,
-//            $ids
-//        );
-//    }
+    public function delete(array $ids): void
+    {
+        if (count($ids) === 0)
+        {
+            return;
+        }
+
+        $placeholders = substr(str_repeat('?,', count($ids)), 0, -1);
+        $this->connection->execute(
+            <<<SQL
+            DELETE FROM master WHERE id IN ($placeholders)
+            SQL,
+            $ids
+        );
+    }
 
     private function hydrateMaster(array $row): Master
     {

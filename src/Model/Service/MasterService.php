@@ -26,4 +26,9 @@ class MasterService
     {
         return $this->masterRepository->listActive();
     }
+
+    public function deleteMaster(int $id): void
+    {
+        $this->masterRepository->delete([$id]);
+    }
 }
