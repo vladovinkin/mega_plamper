@@ -29,8 +29,8 @@ $app->add(TwigMiddleware::create($app, $twig));
 //  запросы к одному URL
 $app->get('/master/list', \App\Controller\MasterController::class . ':list');
 $app->delete('/master/{id}', \App\Controller\MasterController::class . ':delete');
+$app->get('/master/add', \App\Controller\MasterController::class . ':add');
 
-$app->get('/master/new', \App\Controller\MasterController::class . ':new');
 $app->get('/master/{id}', \App\Controller\MasterController::class . ':edit');
 $app->get('/master/event/add', \App\Controller\MasterController::class . ':addEvent');
 $app->delete('/master/event/{id}', \App\Controller\MasterController::class . ':removeEvent');

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% block head %}
+        {% block styles %}{% endblock %}
+        <link rel="stylesheet" href="/css/base.css"/>
+        <title>Megaplamper: {% block title %}{% endblock %}</title>
+    {% endblock %}
+</head>
+<body>
+<div id="content">{% block content %}{% endblock %}</div>
+<div class="footer" id="footer">
+    {% block footer %}
+        &copy; Copyright 2024 by Vladislav Ovinkin.
+    {% endblock %}
+</div>
+<div class="overlay"></div>
+{% block script %}{% endblock %}
+</body>
+</html>

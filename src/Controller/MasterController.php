@@ -45,12 +45,12 @@ class MasterController
         ];
     }
 
-    public function new(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function add(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $view = Twig::fromRequest($request);
 
         return $view->render($response, 'home.twig', [
-            'message' => 'hello world!',
+            'message' => 'add master',
         ]);
     }
 
