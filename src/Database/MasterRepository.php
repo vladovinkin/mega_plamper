@@ -63,22 +63,20 @@ class MasterRepository
         return null;
     }
 
-//    public function save(Article $article): int
-//    {
-//        $articleId = $article->getId();
-//        if ($articleId)
-//        {
-//            $this->updateArticle($article);
-//        }
-//        else
-//        {
-//            $articleId = $this->insertArticle($article);
-//        }
-//
-//        $this->saveArticleTags($articleId, $article->getTags());
-//
-//        return $articleId;
-//    }
+    public function save(Master $master): int
+    {
+        $masterId = $master->getId();
+        if ($masterId)
+        {
+            $this->updateMaster($master);
+        }
+        else
+        {
+            $masterId = $this->insertMaster($master);
+        }
+
+        return $masterId;
+    }
 
     /**
      * @param int[] $ids
@@ -121,65 +119,45 @@ class MasterRepository
         }
     }
 
-//    private function insertArticle(Article $article): int
-//    {
-//        $query = <<<SQL
-//            INSERT INTO article
-//              (version, title, content, created_at, created_by, updated_at, updated_by)
-//            VALUES
-//              (:version, :title, :content, :created_at, :created_by, :updated_at, :updated_by)
-//            SQL;
-//        $params = [
-//            ':version' => $article->getVersion(),
-//            ':title' => $article->getTitle(),
-//            ':content' => $article->getContent(),
-//            ':created_at' => $this->formatDateTimeOrNull($article->getCreatedAt()),
-//            ':created_by' => $article->getCreatedBy(),
-//            ':updated_at' => $this->formatDateTimeOrNull($article->getUpdatedAt()),
-//            ':updated_by' => $article->getUpdatedBy()
-//        ];
-//
-//        $this->connection->execute($query, $params);
-//
-//        return $this->connection->getLastInsertId();
-//    }
-//
-//    private function updateArticle(Article $article): void
-//    {
-//        // NOTE: Оптимистичная блокировка реализована за счёт
-//        //  1. Условия "version = :version" в WHERE
-//        //  2. Проверки числа изменённых колонок
-//        $query = <<<SQL
-//            UPDATE article
-//            SET
-//              id = :id,
-//              version = version + 1,
-//              title = :title,
-//              content = :content,
-//              created_at = :created_at,
-//              created_by = :created_by,
-//              updated_at = :updated_at,
-//              updated_by = :updated_by
-//            WHERE id = :id
-//              AND version = :version
-//            SQL;
-//        $params = [
-//            ':id' => $article->getId(),
-//            ':version' => $article->getVersion(),
-//            ':title' => $article->getTitle(),
-//            ':content' => $article->getContent(),
-//            ':created_at' => $this->formatDateTimeOrNull($article->getCreatedAt()),
-//            ':created_by' => $article->getCreatedBy(),
-//            ':updated_at' => $this->formatDateTimeOrNull($article->getUpdatedAt()),
-//            ':updated_by' => $article->getUpdatedBy()
-//        ];
-//
-//        $stmt = $this->connection->execute($query, $params);
-//        if (!$stmt->rowCount())
-//        {
-//            throw new OptimisticLockException("Optimistic lock failed for article {$article->getId()}");
-//        }
-//    }
+    private function insertMaster(Master $master): int
+    {
+        $query = <<<SQL
+            INSERT INTO master
+              (first_name, last_name, phone)
+            VALUES
+              (:first_name, :last_name, :phone)
+            SQL;
+        $params = [
+            ':first_name' => $master->getFirstName(),
+            ':last_name' => $master->getLastName(),
+            ':phone' => $master->getPhone(),
+        ];
+
+        $this->connection->execute($query, $params);
+
+        return $this->connection->getLastInsertId();
+    }
+
+    private function updateMaster(Master $master): void
+    {
+        $query = <<<SQL
+            UPDATE article
+            SET
+              id = :id,
+              first_name = :first_name,
+              last_name = :last_name,
+                deleted_at = :deleted_at
+            WHERE id = :id
+            SQL;
+        $params = [
+            ':id' => $master->getId(),
+            ':first_name' => $master->getFirstName(),
+            ':last_name' => $master->getLastName(),
+            ':deleted_at' => $master->getDeletedAt()
+        ];
+
+        $stmt = $this->connection->execute($query, $params);
+    }
 
 //    private function formatDateTimeOrNull(?\DateTimeImmutable $dateTime): ?string
 //    {

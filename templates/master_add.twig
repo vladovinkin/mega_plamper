@@ -1,0 +1,44 @@
+{% extends "base.twig" %}
+{% block title %}Новый мастер{% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="/css/master.css"/>
+{% endblock %}
+{% block content %}
+{% set first_name_error_text = first_name_error is defined and first_name_error == true ? 'Поле обязательно для заполнения' : '' %}
+{% set last_name_error_text = last_name_error is defined and last_name_error == true ? 'Поле обязательно для заполнения' : '' %}
+{% set phone_error_text = phone_error is defined and phone_error == true ? 'Поле обязательно для заполнения' : '' %}
+{% set first_name_value = first_name_value ?? '' %}
+<div class="container">
+    <div class="master-title__wrapper">
+        <div class="master-title__text">
+            Новый мастер
+        </div>
+    </div>
+    <form id="form-master-add" class="form-master-add" action="/master/add" method="post">
+        <div class="form-master-add__inputs">
+            <div class="form-master-add__input-wrapper">
+                <input type="text" name="first_name" id="firstName" class="form-master-add__input-text" placeholder="Имя" value="{{ first_name_value }}">
+                <div class="form-master-add__error-text">{{ first_name_error_text }}&nbsp;</div>
+            </div>
+            <div class="form-master-add__input-wrapper">
+                <input type="text" name="last_name" id="lastName" class="form-master-add__input-text" placeholder="Фамилия" value="{{ last_name_value }}">
+                <div class="form-master-add__error-text">{{ last_name_error_text }}&nbsp;</div>
+            </div>
+            <div class="form-master-add__input-wrapper">
+                <input type="text" name="phone" id="phone" class="form-master-add__input-text" placeholder="Номер телефона" value="{{ phone_value }}">
+                <div class="form-master-add__error-text">{{ phone_error_text }}&nbsp;</div>
+            </div>
+        </div>
+        <div class="form-master-add__button">
+            <input type="submit" value="Сохранить" class="form-master-add__button-save">
+            <div class="form-master-add__error-text">&nbsp;</div>
+        </div>
+    </form>
+</div>
+{% endblock %}
+{% block script %}
+    <script src="/js/master_add.js"></script>
+{% endblock %}

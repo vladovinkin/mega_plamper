@@ -25,11 +25,11 @@ $app->add(TwigMiddleware::create($app, $twig));
 
 // Определение правил маршрутизации
 // Методы get/delete/post соответствуют HTTP-методам GET/DELETE/POST,
-//  что позволяет по-разному обрабатывать, например, GET и POST
-//  запросы к одному URL
+//  что позволяет по-разному обрабатывать, например, GET и POST запросы к одному URL
 $app->get('/master/list', \App\Controller\MasterController::class . ':list');
 $app->delete('/master/{id}', \App\Controller\MasterController::class . ':delete');
-$app->get('/master/add', \App\Controller\MasterController::class . ':add');
+$app->get('/master/add', \App\Controller\MasterController::class . ':addForm');
+$app->post('/master/add', \App\Controller\MasterController::class . ':add');
 
 $app->get('/master/{id}', \App\Controller\MasterController::class . ':edit');
 $app->get('/master/event/add', \App\Controller\MasterController::class . ':addEvent');

@@ -35,6 +35,44 @@ class MasterController
         ]);
     }
 
+    public function addForm(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        $view = Twig::fromRequest($request);
+
+        return $view->render($response, 'master_add.twig', []);
+    }
+
+    public function add(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        $params = $request->getParsedBody();
+        $firstName = $params['first_name'] ?? null;
+        $lastName = $params['last_name'] ?? null;
+        $phone = $params['phone'] ?? null;
+
+        $view = Twig::fromRequest($request);
+
+        if (!$firstName || !$lastName || !$phone)
+        {
+            return $view->render($response, 'master_add.twig', [
+                'first_name_value' => $firstName,
+                'last_name_value' => $lastName,
+                'phone_value' => $phone,
+                'first_name_error' => !$firstName,
+                'last_name_error' => !$lastName,
+                'phone_error' => !$phone,
+            ]);
+        }
+        else
+        {
+            $master = new Master(null, $firstName, $lastName, $phone, null);
+            ServiceProvider::getInstance()->getMasterService()->addMaster($master);
+
+            return $view->render($response, 'redirect.twig', [
+                'url' => '/',
+            ]);
+        }
+    }
+
     private function getRowData(Master $data): array
     {
         return [
@@ -43,15 +81,6 @@ class MasterController
             'last_name' => $data->getLastName(),
             'phone' => $data->getPhone(),
         ];
-    }
-
-    public function add(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
-    {
-        $view = Twig::fromRequest($request);
-
-        return $view->render($response, 'home.twig', [
-            'message' => 'add master',
-        ]);
     }
 
     public function addEvent(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface

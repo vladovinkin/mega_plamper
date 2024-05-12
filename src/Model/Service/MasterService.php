@@ -31,4 +31,9 @@ class MasterService
     {
         $this->masterRepository->delete([$id]);
     }
+
+    public function addMaster(Master $master): void
+    {
+        $this->masterRepository->save($master);
+    }
 }
