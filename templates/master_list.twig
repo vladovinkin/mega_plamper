@@ -21,7 +21,7 @@
             <div class="master-row">
                 <div class="master-row__name-wrapper">
                     <div class="master-row__number">{{ num }}.</div>
-                    <div class="master-row__name">{{ row.last_name }} {{ row.first_name }}</div>
+                    <a href="/master/{{ row.id }}" class="master-row__name">{{ row.last_name }} {{ row.first_name }}</a>
                 </div>
                 <div class="master-row__delete-button" data-action="master-delete" data-id="{{ row.id }}" data-name="{{ row.last_name }} {{ row.first_name }}" title="Удалить мастера {{ row.last_name }} {{ row.first_name }}">Удалить</div>
             </div>

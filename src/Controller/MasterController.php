@@ -73,6 +73,15 @@ class MasterController
         }
     }
 
+    public function edit(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        $view = Twig::fromRequest($request);
+
+        return $view->render($response, 'home.twig', [
+            'message' => 'edit master form',
+        ]);
+    }
+
     private function getRowData(Master $data): array
     {
         return [
@@ -84,15 +93,6 @@ class MasterController
     }
 
     public function addEvent(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
-    {
-        $view = Twig::fromRequest($request);
-
-        return $view->render($response, 'home.twig', [
-            'message' => 'hello world!',
-        ]);
-    }
-
-    public function edit(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $view = Twig::fromRequest($request);
 

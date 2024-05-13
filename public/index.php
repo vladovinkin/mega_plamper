@@ -30,13 +30,13 @@ $app->get('/master/list', \App\Controller\MasterController::class . ':list');
 $app->delete('/master/{id}', \App\Controller\MasterController::class . ':delete');
 $app->get('/master/add', \App\Controller\MasterController::class . ':addForm');
 $app->post('/master/add', \App\Controller\MasterController::class . ':add');
-
 $app->get('/master/{id}', \App\Controller\MasterController::class . ':edit');
-$app->get('/master/event/add', \App\Controller\MasterController::class . ':addEvent');
-$app->delete('/master/event/{id}', \App\Controller\MasterController::class . ':removeEvent');
-$app->get('/client/list', \App\Controller\ClientController::class . ':list');
-$app->get('/client/new', \App\Controller\ClientController::class . ':new');
-$app->get('/client/[id]', \App\Controller\ClientController::class . ':edit');
+
+//$app->get('/master/event/add', \App\Controller\MasterController::class . ':addEvent');
+//$app->delete('/master/event/{id}', \App\Controller\MasterController::class . ':removeEvent');
+//$app->get('/client/list', \App\Controller\ClientController::class . ':list');
+//$app->get('/client/new', \App\Controller\ClientController::class . ':new');
+//$app->get('/client/[id]', \App\Controller\ClientController::class . ':edit');
 $app->redirect('/', '/master/list');
 
 $app->run();

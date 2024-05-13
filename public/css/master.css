@@ -27,6 +27,7 @@
 .master-title__button-add {
   font: 12px/1 Arial;
   color: #336699;
+  text-decoration: none;
 }
 
 .master-row {
@@ -50,13 +51,14 @@
 }
 
 .master-row__name {
-
+  color: #000064;
+  text-decoration: none;
 }
 
 .master-row__delete-button {
   font: 12px/1 Arial;
   color: #336699;
-  text-decoration: underline;
+  text-decoration: none;
   cursor: pointer;
 }
 
@@ -103,6 +105,12 @@
 
 .confirm-delete__text {
   font: 16px/1.4 Arial;
+}
+
+.master-title__button-add:hover,
+.master-row__name:hover,
+.master-row__delete-button:hover {
+  text-decoration: underline;
 }
 
 .confirm-delete__buttons {
