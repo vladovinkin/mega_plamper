@@ -25,7 +25,7 @@ class MasterRepository
               id,
               first_name,
               last_name,
-              phone,
+              phone
             FROM master
             WHERE deleted_at IS NULL
             ORDER BY last_name
@@ -49,7 +49,7 @@ class MasterRepository
               id,
               first_name,
               last_name,
-              phone,
+              phone
             FROM master
             WHERE deleted_at IS NULL
             AND id = ?
