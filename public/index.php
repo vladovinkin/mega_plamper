@@ -33,7 +33,7 @@ $app->post('/master/add', \App\Controller\MasterController::class . ':add');
 $app->get('/master/{id}', \App\Controller\MasterController::class . ':showEditForm');
 $app->post('/master/edit', \App\Controller\MasterController::class . ':edit');
 
-//$app->get('/client/list', \App\Controller\ClientController::class . ':list');
+$app->get('/client/list', \App\Controller\ClientController::class . ':list');
 //$app->get('/client/add', \App\Controller\ClientController::class . ':showAddForm');
 //$app->post('/client/add', \App\Controller\ClientController::class . ':add');
 //$app->get('/client/{id}', \App\Controller\ClientController::class . ':showEditForm');

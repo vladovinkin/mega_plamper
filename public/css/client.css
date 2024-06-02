@@ -1,0 +1,178 @@
+.container {
+  margin: 0 auto;
+  padding-bottom: 100px;
+  width: 375px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.client-title__wrapper {
+  margin-bottom: 16px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.client-title__text {
+  font: 600 18px/1 Arial;
+}
+
+.client-title__text_quantity {
+  margin-left: 6px;
+  color: #AAAAAA;
+}
+
+.client-title__button-add {
+  font: 12px/1 Arial;
+  color: #336699;
+  text-decoration: none;
+}
+
+.client-row {
+  margin-bottom: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.client-row:last-child {
+  margin-bottom: 0;
+}
+
+.client-row__name-wrapper {
+  display: flex;
+  font: 16px/1 Arial;
+}
+
+.client-row__number {
+  width: 24px;
+}
+
+.client-row__name {
+  color: #000064;
+  text-decoration: none;
+}
+
+.client-row__delete-button {
+  font: 12px/1 Arial;
+  color: #336699;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.overlay {
+  display: block;
+  position: fixed;
+  z-index: 5;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: black;
+  -webkit-transition: all .2s ease;
+  -o-transition: all .2s ease;
+  transition: all .2s ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.active {
+   opacity: 0.25;
+   pointer-events: all;
+   overflow: hidden;
+}
+
+.ov-hid {
+  overflow: hidden;
+}
+
+.confirm-delete {
+  padding: 20px 10px;
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  position: fixed;
+  z-index: 6;
+  top: 50px;
+  width: 350px;
+  left: calc(50vw - 185px);
+  background: #FFFFFF;
+  text-align: center;
+  box-shadow: 1px 1px 5px #888888;
+}
+
+.confirm-delete__text {
+  font: 16px/1.4 Arial;
+}
+
+.client-title__button-add:hover,
+.client-row__name:hover,
+.client-row__delete-button:hover {
+  text-decoration: underline;
+}
+
+.confirm-delete__buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.confirm-delete__button {
+  padding: 5px 30px;
+  outline: none;
+  border: 1px solid #CCCCCC;
+  cursor: pointer;
+  background: #98FB98;
+  border-radius: 3px;
+}
+
+.confirm-delete__button_no {
+  margin-left: 30px;
+  background: #DC143C;
+  color: #FFFFFF;
+}
+
+.form-client-add {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-client-add__input-wrapper {
+  margin-bottom: 10px;
+}
+
+.form-client-add__input-wrapper:last-child {
+  margin-bottom: 0;
+}
+
+.form-client-add__input-text {
+  width: calc(100% - 24px);
+  padding: 5px 10px;
+}
+
+.form-client-add__error-text {
+  font: 12px/1.4 Arial;
+  color: #FF0000;
+}
+
+.form-client-add__button {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.form-client-add__button-save {
+  padding: 5px 30px;
+  outline: none;
+  border: 1px solid #CCCCCC;
+  cursor: pointer;
+  background: #98FB98;
+  border-radius: 3px;
+}
+
+.show {
+  display: flex;
+}
