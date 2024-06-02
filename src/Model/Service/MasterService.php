@@ -3,20 +3,17 @@ declare(strict_types=1);
 
 namespace App\Model\Service;
 
-use App\Common\Database\Synchronization;
 use App\Database\MasterRepository;
+use App\Model\Data\CreateMasterParams;
+use App\Model\Data\EditMasterParams;
 use App\Model\Master;
-//use App\Model\Exception\MasterNotFoundException;
 
 class MasterService
 {
-    private Synchronization $synchronization;
-    private MasterRepository $masterRepository;
-
-    public function __construct(Synchronization $synchronization, MasterRepository $masterRepository)
+    public function __construct(
+        private readonly MasterRepository $masterRepository
+    )
     {
-        $this->synchronization = $synchronization;
-        $this->masterRepository = $masterRepository;
     }
 
     /**
@@ -24,7 +21,7 @@ class MasterService
      */
     public function getMasters(): array
     {
-        return $this->masterRepository->listActive();
+        return $this->masterRepository->list();
     }
 
     public function deleteMaster(int $id): void
@@ -32,8 +29,31 @@ class MasterService
         $this->masterRepository->delete([$id]);
     }
 
-    public function addMaster(Master $master): void
+    public function createMaster(CreateMasterParams $params): int
     {
+        $master = new Master(
+            null,
+            $params->getFirstName(),
+            $params->getLastName(),
+            $params->getPhone()
+        );
+
+        return $this->masterRepository->save($master);
+    }
+
+    public function editMaster(EditMasterParams $params): void
+    {
+        $master = $this->getMaster($params->getId());
+        $master->edit($params->getFirstName(), $params->getLastName(), $params->getPhone());
         $this->masterRepository->save($master);
+    }
+
+    /**
+     * @param int $id
+     * @return Master
+     */
+    public function getMaster(int $id): Master
+    {
+        return $this->masterRepository->findOne($id);
     }
 }

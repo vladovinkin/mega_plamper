@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace App\Model\Service;
 
 use App\Common\Database\ConnectionProvider;
-use App\Common\Database\Synchronization;
 use App\Database\MasterRepository;
 
 final class ServiceProvider
@@ -26,8 +25,7 @@ final class ServiceProvider
     {
         if ($this->masterService === null)
         {
-            $synchronization = new Synchronization(ConnectionProvider::getConnection());
-            $this->masterService = new MasterService($synchronization, $this->getMasterRepository());
+            $this->masterService = new MasterService($this->getMasterRepository());
         }
         return $this->masterService;
     }

@@ -3,51 +3,34 @@ declare(strict_types=1);
 
 namespace App\Model;
 
-use DateTimeImmutable;
-
 class Master
 {
-    private ?int $id;
-    private string $firstName;
-    private string $lastName;
-    private string $phone;
-    private ?DateTimeImmutable $deletedAt;
-
     /**
      * @param int|null $id
      * @param string $firstName
      * @param string $lastName
      * @param string $phone
-     * @param DateTimeImmutable|null $deletedAt
      */
     public function __construct(
-        ?int $id,
-        string $firstName,
-        string $lastName,
-        string $phone,
-        ?DateTimeImmutable $deletedAt
+        private ?int               $id,
+        private string             $firstName,
+        private string             $lastName,
+        private string             $phone
     )
     {
-        $this->id = $id;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->phone = $phone;
-        $this->deletedAt = $deletedAt;
     }
 
     /**
      * @param string $firstName
      * @param string $lastName
      * @param string $phone
-     * @param DateTimeImmutable|null $deletedAt
      * @return void
      */
-    public function edit(string $firstName, string $lastName, string $phone, ?DateTimeImmutable $deletedAt): void
+    public function edit(string $firstName, string $lastName, string $phone): void
     {
         $this->firstName = $firstName;
         $this->lastName = $lastName;
         $this->phone = $phone;
-        $this->deletedAt = $deletedAt;
     }
 
     public function getId(): ?int
@@ -68,10 +51,5 @@ class Master
     public function getPhone(): string
     {
         return $this->phone;
-    }
-
-    public function getDeletedAt(): ?DateTimeImmutable
-    {
-        return $this->deletedAt;
     }
 }

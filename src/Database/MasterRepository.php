@@ -6,7 +6,6 @@ namespace App\Database;
 use App\Common\Database\Connection;
 use App\Common\Database\DatabaseDateFormat;
 use App\Model\Master;
-//use App\Model\Exception\OptimisticLockException;
 
 class MasterRepository
 {
@@ -20,7 +19,7 @@ class MasterRepository
     /**
      * @return Master[]
      */
-    public function listActive(): array
+    public function list(): array
     {
         $query = <<<SQL
             SELECT
@@ -51,7 +50,8 @@ class MasterRepository
               m.phone,
               m.deleted_at
             FROM master m
-            WHERE m.id = ?
+            WHERE m.deleted_at IS NULL
+            AND m.id = ?
             SQL;
 
         $params = [$id];
@@ -109,8 +109,7 @@ class MasterRepository
                 (int)$row['id'],
                 (string)$row['first_name'],
                 (string)$row['last_name'],
-                (string)$row['phone'],
-                $this->parseDateTimeOrNull($row['deleted_at']),
+                (string)$row['phone']
             );
         }
         catch (\Exception $e)
@@ -141,38 +140,19 @@ class MasterRepository
     private function updateMaster(Master $master): void
     {
         $query = <<<SQL
-            UPDATE article
+            UPDATE master
             SET
               id = :id,
               first_name = :first_name,
-              last_name = :last_name,
-                deleted_at = :deleted_at
+              last_name = :last_name
             WHERE id = :id
             SQL;
         $params = [
             ':id' => $master->getId(),
             ':first_name' => $master->getFirstName(),
             ':last_name' => $master->getLastName(),
-            ':deleted_at' => $master->getDeletedAt()
         ];
 
-        $stmt = $this->connection->execute($query, $params);
-    }
-
-//    private function formatDateTimeOrNull(?\DateTimeImmutable $dateTime): ?string
-//    {
-//        return $dateTime?->format(DatabaseDateFormat::MYSQL_DATETIME_FORMAT);
-//    }
-//
-    private function parseDateTimeOrNull(?string $value): ?\DateTimeImmutable
-    {
-        try
-        {
-            return ($value !== null) ? new \DateTimeImmutable($value, new \DateTimeZone('Etc/UTC')) : null;
-        }
-        catch (\Exception $e)
-        {
-            throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
-        }
+        $this->connection->execute($query, $params);
     }
 }

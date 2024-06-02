@@ -1,5 +1,6 @@
 {% extends "base.twig" %}
-{% block title %}Новый мастер{% endblock %}
+{% set title = id is defined ? 'Редактирование данных мастера' : 'Новый мастер' %}
+{% block title %}{{ title }}{% endblock %}
 {% block head %}
     {{ parent() }}
 {% endblock %}
@@ -11,14 +12,16 @@
 {% set last_name_error_text = last_name_error is defined and last_name_error == true ? 'Поле обязательно для заполнения' : '' %}
 {% set phone_error_text = phone_error is defined and phone_error == true ? 'Поле обязательно для заполнения' : '' %}
 {% set first_name_value = first_name_value ?? '' %}
+{% set action = id is defined ? '/master/edit' : '/master/add' %}
 <div class="container">
     <div class="master-title__wrapper">
-        <div class="master-title__text">
-            Новый мастер
-        </div>
+        <div class="master-title__text">{{  title }}</div>
     </div>
-    <form id="form-master-add" class="form-master-add" action="/master/add" method="post">
+    <form id="form-master-add" class="form-master-add" action="{{ action }}" method="post">
         <div class="form-master-add__inputs">
+            {% if id is defined %}
+                <input type="hidden" name="id" value="{{ id }}">
+            {% endif %}
             <div class="form-master-add__input-wrapper">
                 <input type="text" name="first_name" id="firstName" class="form-master-add__input-text" placeholder="Имя" value="{{ first_name_value }}">
                 <div class="form-master-add__error-text">{{ first_name_error_text }}&nbsp;</div>

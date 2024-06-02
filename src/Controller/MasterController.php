@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Controller\Request\MasterRequestParser;
 use App\Model\Master;
 use App\Model\Service\ServiceProvider;
 use Psr\Http\Message\ResponseInterface;
@@ -35,11 +36,11 @@ class MasterController
         ]);
     }
 
-    public function addForm(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function showAddForm(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
         $view = Twig::fromRequest($request);
 
-        return $view->render($response, 'master_add.twig', []);
+        return $view->render($response, 'master_form.twig', []);
     }
 
     public function add(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
@@ -53,7 +54,7 @@ class MasterController
 
         if (!$firstName || !$lastName || !$phone)
         {
-            return $view->render($response, 'master_add.twig', [
+            return $view->render($response, 'master_form.twig', [
                 'first_name_value' => $firstName,
                 'last_name_value' => $lastName,
                 'phone_value' => $phone,
@@ -64,8 +65,8 @@ class MasterController
         }
         else
         {
-            $master = new Master(null, $firstName, $lastName, $phone, null);
-            ServiceProvider::getInstance()->getMasterService()->addMaster($master);
+            $params = MasterRequestParser::parseCreateMasterParams((array)$request->getParsedBody());
+            $masterId = ServiceProvider::getInstance()->getMasterService()->createMaster($params);
 
             return $view->render($response, 'redirect.twig', [
                 'url' => '/',
@@ -73,12 +74,73 @@ class MasterController
         }
     }
 
-    public function edit(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    public function showEditForm(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
+        $params = $request->getParsedBody();
+        $master_id = (int)$args['id'] ?? null;
+
+        if ($master_id && $master = ServiceProvider::getInstance()->getMasterService()->getMaster($master_id)) {
+            $firstName = $master->getFirstName() ?? null;
+            $lastName = $master->getLastName() ?? null;
+            $phone = $master->getPhone() ?? null;
+        }
+
         $view = Twig::fromRequest($request);
 
+        return $view->render($response, 'master_form.twig', [
+            'id' => $master_id,
+            'first_name_value' => $firstName,
+            'last_name_value' => $lastName,
+            'phone_value' => $phone,
+        ]);
+    }
+
+    public function edit(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
+    {
+        $params = $request->getParsedBody();
+        $master_id = (int)$params['id'] ?? null;
+
+        $view = Twig::fromRequest($request);
+
+        if ($master_id && $master = ServiceProvider::getInstance()->getMasterService()->getMaster($master_id))
+        {
+            $firstName = $params['first_name'] ?? null;
+            $lastName = $params['last_name'] ?? null;
+            $phone = $params['phone'] ?? null;
+
+            if (!$firstName || !$lastName || !$phone)
+            {
+                return $view->render($response, 'master_form.twig', [
+                    'id' => $master_id,
+                    'first_name_value' => $firstName,
+                    'last_name_value' => $lastName,
+                    'phone_value' => $phone,
+                    'first_name_error' => !$firstName,
+                    'last_name_error' => !$lastName,
+                    'phone_error' => !$phone,
+                ]);
+            }
+            else
+            {
+                $params = MasterRequestParser::parseEditMasterParams((array)$request->getParsedBody());
+                ServiceProvider::getInstance()->getMasterService()->editMaster($params);
+
+                return $view->render($response, 'redirect.twig', [
+                    'url' => '/',
+                ]);
+            }
+            /*
+            return $view->render($response, 'master_form.twig', [
+                'id' => $master_id,
+                'first_name_value' => $master->getFirstName(),
+                'last_name_value' => $master->getLastName(),
+                'phone_value' => $master->getPhone(),
+            ]);
+            */
+        }
+
         return $view->render($response, 'home.twig', [
-            'message' => 'edit master form',
+            'message' => 'Oops! its 404 :(',
         ]);
     }
 
