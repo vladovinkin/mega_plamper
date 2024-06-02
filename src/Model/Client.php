@@ -5,11 +5,6 @@ namespace App\Model;
 
 class Client
 {
-    private ?int $id;
-    private string $firstName;
-    private string $lastName;
-    private string $phone;
-
     /**
      * @param int|null $id
      * @param string $firstName
@@ -17,16 +12,12 @@ class Client
      * @param string $phone
      */
     public function __construct(
-        ?int $id,
-        string $firstName,
-        string $lastName,
-        string $phone
+        private readonly ?int $id,
+        private string $firstName,
+        private string $lastName,
+        private string $phone
     )
     {
-        $this->id = $id;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->phone = $phone;
     }
 
     /**
