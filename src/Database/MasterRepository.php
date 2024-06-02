@@ -9,11 +9,10 @@ use App\Model\Master;
 
 class MasterRepository
 {
-    private Connection $connection;
-
-    public function __construct(Connection $connection)
+    public function __construct(
+        private readonly Connection $connection
+    )
     {
-        $this->connection = $connection;
     }
 
     /**
@@ -23,14 +22,13 @@ class MasterRepository
     {
         $query = <<<SQL
             SELECT
-              m.id,
-              m.first_name,
-              m.last_name,
-              m.phone,
-              m.deleted_at
-            FROM master m
-            WHERE m.deleted_at IS NULL
-            ORDER BY m.last_name
+              id,
+              first_name,
+              last_name,
+              phone,
+            FROM master
+            WHERE deleted_at IS NULL
+            ORDER BY last_name
             SQL;
         $stmt = $this->connection->execute($query);
 
@@ -40,18 +38,21 @@ class MasterRepository
         );
     }
 
+    /**
+     * @param int $id
+     * @return ?Master
+     */
     public function findOne(int $id): ?Master
     {
         $query = <<<SQL
             SELECT
-              m.id,
-              m.first_name,
-              m.last_name,
-              m.phone,
-              m.deleted_at
-            FROM master m
-            WHERE m.deleted_at IS NULL
-            AND m.id = ?
+              id,
+              first_name,
+              last_name,
+              phone,
+            FROM master
+            WHERE deleted_at IS NULL
+            AND id = ?
             SQL;
 
         $params = [$id];
@@ -63,6 +64,10 @@ class MasterRepository
         return null;
     }
 
+    /**
+     * @param Master $master
+     * @return int
+     */
     public function save(Master $master): int
     {
         $masterId = $master->getId();
@@ -101,23 +106,10 @@ class MasterRepository
         );
     }
 
-    private function hydrateMaster(array $row): Master
-    {
-        try
-        {
-            return new Master(
-                (int)$row['id'],
-                (string)$row['first_name'],
-                (string)$row['last_name'],
-                (string)$row['phone']
-            );
-        }
-        catch (\Exception $e)
-        {
-            throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
-        }
-    }
-
+    /**
+     * @param Master $master
+     * @return int
+     */
     private function insertMaster(Master $master): int
     {
         $query = <<<SQL
@@ -137,6 +129,10 @@ class MasterRepository
         return $this->connection->getLastInsertId();
     }
 
+    /**
+     * @param Master $master
+     * @return void
+     */
     private function updateMaster(Master $master): void
     {
         $query = <<<SQL
@@ -154,5 +150,26 @@ class MasterRepository
         ];
 
         $this->connection->execute($query, $params);
+    }
+
+    /**
+     * @param array $row
+     * @return Master
+     */
+    private function hydrateMaster(array $row): Master
+    {
+        try
+        {
+            return new Master(
+                (int)$row['id'],
+                (string)$row['first_name'],
+                (string)$row['last_name'],
+                (string)$row['phone']
+            );
+        }
+        catch (\Exception $e)
+        {
+            throw new \RuntimeException($e->getMessage(), $e->getCode(), $e);
+        }
     }
 }
