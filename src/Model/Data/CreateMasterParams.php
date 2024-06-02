@@ -11,9 +11,9 @@ class CreateMasterParams
      * @param string $phone
      */
     public function __construct(
-        private string $firstName,
-        private string $lastName,
-        private string $phone
+        private readonly string $firstName,
+        private readonly string $lastName,
+        private readonly string $phone
     )
     {
     }

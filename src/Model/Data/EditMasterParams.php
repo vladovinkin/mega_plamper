@@ -12,10 +12,10 @@ class EditMasterParams
      * @param string $phone
      */
     public function __construct(
-        private int $id,
-        private string $firstName,
-        private string $lastName,
-        private string $phone
+        private readonly int $id,
+        private readonly string $firstName,
+        private readonly string $lastName,
+        private readonly string $phone
     )
     {
     }
