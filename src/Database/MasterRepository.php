@@ -40,7 +40,7 @@ class MasterRepository
 
     /**
      * @param int $id
-     * @return ?Master
+     * @return Master|null
      */
     public function findOne(int $id): ?Master
     {
