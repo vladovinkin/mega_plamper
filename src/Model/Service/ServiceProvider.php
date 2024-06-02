@@ -4,12 +4,15 @@ declare(strict_types=1);
 namespace App\Model\Service;
 
 use App\Common\Database\ConnectionProvider;
+use App\Database\ClientRepository;
 use App\Database\MasterRepository;
 
 final class ServiceProvider
 {
     private ?MasterService $masterService = null;
     private ?MasterRepository $masterRepository = null;
+    private ?ClientService $clientService = null;
+    private ?ClientRepository $clientRepository = null;
 
     public static function getInstance(): self
     {
@@ -30,6 +33,15 @@ final class ServiceProvider
         return $this->masterService;
     }
 
+    public function getClientService(): ClientService
+    {
+        if ($this->clientService === null)
+        {
+            $this->clientService = new ClientService($this->getClientRepository());
+        }
+        return $this->clientService;
+    }
+
     private function getMasterRepository(): MasterRepository
     {
         if ($this->masterRepository === null)
@@ -37,5 +49,14 @@ final class ServiceProvider
             $this->masterRepository = new MasterRepository(ConnectionProvider::getConnection());
         }
         return $this->masterRepository;
+    }
+
+    private function getClientRepository(): ClientRepository
+    {
+        if ($this->clientRepository === null)
+        {
+            $this->clientRepository = new ClientRepository(ConnectionProvider::getConnection());
+        }
+        return $this->clientRepository;
     }
 }
