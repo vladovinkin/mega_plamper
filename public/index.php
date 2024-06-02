@@ -33,11 +33,14 @@ $app->post('/master/add', \App\Controller\MasterController::class . ':add');
 $app->get('/master/{id}', \App\Controller\MasterController::class . ':showEditForm');
 $app->post('/master/edit', \App\Controller\MasterController::class . ':edit');
 
+//$app->get('/client/list', \App\Controller\ClientController::class . ':list');
+//$app->get('/client/add', \App\Controller\ClientController::class . ':showAddForm');
+//$app->post('/client/add', \App\Controller\ClientController::class . ':add');
+//$app->get('/client/{id}', \App\Controller\ClientController::class . ':showEditForm');
+//$app->post('/client/edit', \App\Controller\ClientController::class . ':edit');
+
 //$app->get('/master/event/add', \App\Controller\MasterController::class . ':addEvent');
 //$app->delete('/master/event/{id}', \App\Controller\MasterController::class . ':removeEvent');
-//$app->get('/client/list', \App\Controller\ClientController::class . ':list');
-//$app->get('/client/new', \App\Controller\ClientController::class . ':new');
-//$app->get('/client/[id]', \App\Controller\ClientController::class . ':edit');
 $app->redirect('/', '/master/list');
 
 $app->run();
