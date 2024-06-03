@@ -6,28 +6,31 @@
 {% block styles %}
     <link rel="stylesheet" href="/css/client.css"/>
 {% endblock %}
+{% block menu %}
+    {% include 'menu.twig' with {
+        'active': 'master'
+    } %}
+{% endblock %}
 {% block content %}
-    <div class="container">
-        <div class="client-title__wrapper">
-            <div class="client-title__text">
-                Клиенты <span class="client-title__text_quantity">{{ quantity }}</span>
-            </div>
-            <a href="/client/add" class="client-title__button-add" title="Новый клиент">
-                Добавить
-            </a>
-        </div>
-        {% set num = 1 %}
-        {% for row in clients %}
-            <div class="client-row">
-                <div class="client-row__name-wrapper">
-                    <div class="client-row__number">{{ num }}.</div>
-                    <a href="/client/{{ row.id }}" class="client-row__name">{{ row.last_name }} {{ row.first_name }}</a>
-                </div>
-                <div>[last visit date]</div>
-            </div>
-            {% set num = num + 1 %}
-        {% endfor %}
+<div class="client-title__wrapper">
+    <div class="client-title__text">
+        Клиенты <span class="client-title__text_quantity">{{ quantity }}</span>
     </div>
+    <a href="/client/add" class="client-title__button-add" title="Новый клиент">
+        Добавить
+    </a>
+</div>
+{% set num = 1 %}
+{% for row in clients %}
+    <div class="client-row">
+        <div class="client-row__name-wrapper">
+            <div class="client-row__number">{{ num }}.</div>
+            <a href="/client/{{ row.id }}" class="client-row__name">{{ row.last_name }} {{ row.first_name }}</a>
+        </div>
+        <div>[last visit date]</div>
+    </div>
+    {% set num = num + 1 %}
+{% endfor %}
 {% endblock %}
 {% block script %}
 {% endblock %}

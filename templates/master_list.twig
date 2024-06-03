@@ -6,38 +6,41 @@
 {% block styles %}
     <link rel="stylesheet" href="/css/master.css"/>
 {% endblock %}
+{% block menu %}
+    {% include 'menu.twig' with {
+        'active': 'client'
+    } %}
+{% endblock %}
 {% block content %}
-    <div class="container">
-        <div class="master-title__wrapper">
-            <div class="master-title__text">
-                Мастера <span class="master-title__text_quantity">{{ quantity }}</span>
-            </div>
-            <a href="/master/add" class="master-title__button-add" title="Добавить мастера">
-                Добавить
-            </a>
-        </div>
-        {% set num = 1 %}
-        {% for row in masters %}
-            <div class="master-row">
-                <div class="master-row__name-wrapper">
-                    <div class="master-row__number">{{ num }}.</div>
-                    <a href="/master/{{ row.id }}" class="master-row__name">{{ row.last_name }} {{ row.first_name }}</a>
-                </div>
-                <div class="master-row__delete-button" data-action="master-delete" data-id="{{ row.id }}" data-name="{{ row.last_name }} {{ row.first_name }}" title="Удалить мастера {{ row.last_name }} {{ row.first_name }}">Удалить</div>
-            </div>
-            {% set num = num + 1 %}
-        {% endfor %}
-        <div class="confirm-delete">
-            <div class="confirm-delete__text"></div>
-            <div class="confirm-delete__buttons">
-                <form id="confirm" action="" method="post">
-                    <input type="hidden" name="_METHOD" value="DELETE">
-                    <input type="submit" value="Да" class="confirm-delete__button">
-                </form>
-                <button id="cancelButton" class="confirm-delete__button confirm-delete__button_no">Нет</button>
-            </div>
-        </div>
+<div class="master-title__wrapper">
+    <div class="master-title__text">
+        Мастера <span class="master-title__text_quantity">{{ quantity }}</span>
     </div>
+    <a href="/master/add" class="master-title__button-add" title="Добавить мастера">
+        Добавить
+    </a>
+</div>
+{% set num = 1 %}
+{% for row in masters %}
+    <div class="master-row">
+        <div class="master-row__name-wrapper">
+            <div class="master-row__number">{{ num }}.</div>
+            <a href="/master/{{ row.id }}" class="master-row__name">{{ row.last_name }} {{ row.first_name }}</a>
+        </div>
+        <div class="master-row__delete-button" data-action="master-delete" data-id="{{ row.id }}" data-name="{{ row.last_name }} {{ row.first_name }}" title="Удалить мастера {{ row.last_name }} {{ row.first_name }}">Удалить</div>
+    </div>
+    {% set num = num + 1 %}
+{% endfor %}
+<div class="confirm-delete">
+    <div class="confirm-delete__text"></div>
+    <div class="confirm-delete__buttons">
+        <form id="confirm" action="" method="post">
+            <input type="hidden" name="_METHOD" value="DELETE">
+            <input type="submit" value="Да" class="confirm-delete__button">
+        </form>
+        <button id="cancelButton" class="confirm-delete__button confirm-delete__button_no">Нет</button>
+    </div>
+</div>
 {% endblock %}
 {% block script %}
 <script src="/js/master.js"></script>

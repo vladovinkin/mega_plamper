@@ -1,12 +1,3 @@
-.container {
-  margin: 0 auto;
-  padding-bottom: 100px;
-  width: 375px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .client-title__wrapper {
   margin-bottom: 16px;
   width: 100%;

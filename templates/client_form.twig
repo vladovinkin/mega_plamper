@@ -1,0 +1,47 @@
+{% extends "base.twig" %}
+{% set title = id is defined ? 'Редактирование данных клиента' : 'Новый клиент' %}
+{% block title %}{{ title }}{% endblock %}
+{% block head %}
+    {{ parent() }}
+{% endblock %}
+{% block styles %}
+    <link rel="stylesheet" href="/css/client.css"/>
+{% endblock %}
+{% block menu %}
+    {% include 'menu.twig' with {
+        'active': 'all'
+    } %}
+{% endblock %}
+{% block content %}
+{% set first_name_error_text = first_name_error is defined and first_name_error == true ? 'Поле обязательно для заполнения' : '' %}
+{% set last_name_error_text = last_name_error is defined and last_name_error == true ? 'Поле обязательно для заполнения' : '' %}
+{% set phone_error_text = phone_error is defined and phone_error == true ? 'Поле обязательно для заполнения' : '' %}
+{% set first_name_value = first_name_value ?? '' %}
+{% set action = id is defined ? '/client/edit' : '/client/add' %}
+<div class="client-title__wrapper">
+    <div class="client-title__text">{{  title }}</div>
+</div>
+<form id="form-client-add" class="form-client-add" action="{{ action }}" method="post">
+    <div class="form-client-add__inputs">
+        {% if id is defined %}
+            <input type="hidden" name="id" value="{{ id }}">
+        {% endif %}
+        <div class="form-client-add__input-wrapper">
+            <input type="text" name="first_name" id="firstName" class="form-client-add__input-text" placeholder="Имя" value="{{ first_name_value }}">
+            <div class="form-client-add__error-text">{{ first_name_error_text }}&nbsp;</div>
+        </div>
+        <div class="form-client-add__input-wrapper">
+            <input type="text" name="last_name" id="lastName" class="form-client-add__input-text" placeholder="Фамилия" value="{{ last_name_value }}">
+            <div class="form-client-add__error-text">{{ last_name_error_text }}&nbsp;</div>
+        </div>
+        <div class="form-client-add__input-wrapper">
+            <input type="text" name="phone" id="phone" class="form-client-add__input-text" placeholder="Номер телефона" value="{{ phone_value }}">
+            <div class="form-client-add__error-text">{{ phone_error_text }}&nbsp;</div>
+        </div>
+    </div>
+    <div class="form-client-add__button">
+        <input type="submit" value="Сохранить" class="form-client-add__button-save">
+        <div class="form-client-add__error-text">&nbsp;</div>
+    </div>
+</form>
+{% endblock %}

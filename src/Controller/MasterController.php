@@ -69,29 +69,31 @@ class MasterController
             $masterId = ServiceProvider::getInstance()->getMasterService()->createMaster($params);
 
             return $view->render($response, 'redirect.twig', [
-                'url' => '/',
+                'url' => '/master/list',
             ]);
         }
     }
 
     public function showEditForm(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface
     {
-        $params = $request->getParsedBody();
         $master_id = (int)$args['id'] ?? null;
+        $view = Twig::fromRequest($request);
 
         if ($master_id && $master = ServiceProvider::getInstance()->getMasterService()->getMaster($master_id)) {
             $firstName = $master->getFirstName() ?? null;
             $lastName = $master->getLastName() ?? null;
             $phone = $master->getPhone() ?? null;
+
+            return $view->render($response, 'master_form.twig', [
+                'id' => $master_id,
+                'first_name_value' => $firstName,
+                'last_name_value' => $lastName,
+                'phone_value' => $phone,
+            ]);
         }
 
-        $view = Twig::fromRequest($request);
-
-        return $view->render($response, 'master_form.twig', [
-            'id' => $master_id,
-            'first_name_value' => $firstName,
-            'last_name_value' => $lastName,
-            'phone_value' => $phone,
+        return $view->render($response, 'home.twig', [
+            'message' => 'Oops! its 404 :(',
         ]);
     }
 
@@ -126,17 +128,9 @@ class MasterController
                 ServiceProvider::getInstance()->getMasterService()->editMaster($params);
 
                 return $view->render($response, 'redirect.twig', [
-                    'url' => '/',
+                    'url' => '/master/list',
                 ]);
             }
-            /*
-            return $view->render($response, 'master_form.twig', [
-                'id' => $master_id,
-                'first_name_value' => $master->getFirstName(),
-                'last_name_value' => $master->getLastName(),
-                'phone_value' => $master->getPhone(),
-            ]);
-            */
         }
 
         return $view->render($response, 'home.twig', [
