@@ -1,0 +1,20 @@
+{% block styles %}
+    <link rel="stylesheet" href="/css/menu.css"/>
+{% endblock %}
+
+{% set master_list_link = '/master/list' %}
+{% set client_list_link = '/client/list' %}
+{% set master_list_link_text = 'Мастера' %}
+{% set client_list_link_text = 'Клиенты' %}
+
+{% if active == 'master' or active == 'all' %}
+<a href="{{master_list_link}}" class="menu__button menu__button_active" title="Список мастеров">{{ master_list_link_text }}</a>
+{% else %}
+<div class="menu__button">{{ master_list_link_text }}</div>
+{% endif %}
+
+{% if active == 'client' or active == 'all' %}
+    <a href="{{client_list_link}}" class="menu__button menu__button_active" title="Список клиентов">{{ client_list_link_text }}</a>
+{% else %}
+    <div class="menu__button">{{ client_list_link_text }}</div>
+{% endif %}

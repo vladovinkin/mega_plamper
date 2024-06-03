@@ -8,7 +8,10 @@
     {% endblock %}
 </head>
 <body>
-<div id="content">{% block content %}{% endblock %}</div>
+<div class="container">
+    <div class="menu">{% block menu %}{% endblock %}</div>
+    <div class="content" id="content">{% block content %}{% endblock %}</div>
+</div>
 <div class="footer" id="footer">
     {% block footer %}
         &copy; Copyright 2024 by Vladislav Ovinkin.

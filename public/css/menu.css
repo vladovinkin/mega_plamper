@@ -1,0 +1,14 @@
+.menu {
+  margin-bottom: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.menu__button {
+  width: 50%;
+  padding: 10px 0;
+  font: 14px/1 Arial;
+  text-align: center;
+  outline: 1px solid #336699;
+}
